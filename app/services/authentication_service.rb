@@ -10,7 +10,7 @@ class AuthenticationService
 
   # Decodifica o token JWT
   def self.decode(token)
-    token = token&.split(' ')&.last
+    token = token&.split("Bearer")&.last&.strip
     decoded = JWT.decode(token, SECRET_KEY, true, { algorithm: 'HS256' })[0]
     HashWithIndifferentAccess.new(decoded)
   rescue JWT::DecodeError => e

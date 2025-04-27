@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :update, :destroy]
-  # before_action :authenticate_request!, only: [:index, :show, :update, :destroy]
+  before_action :authenticate_request!
 
   # GET /users
   def index
@@ -39,6 +39,16 @@ class UsersController < ApplicationController
     head :no_content
   end
 
+  # GET /users/me
+  def me
+    @user = @current_user
+    if @user
+      render json: @user, serializer: UserSerializer
+    else
+      render json: { message: 'Usuário não encontrado' }, status: :not_found
+    end
+  end
+
   private
 
   def set_user
@@ -48,6 +58,14 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :name)
+    params.require(:user).permit(
+      :email, 
+      :password, 
+      :password_confirmation, 
+      :name, 
+      :phone, 
+      :birthdate,
+      user_detail_attributes: [:phone, :birthdate]
+      )
   end
 end
