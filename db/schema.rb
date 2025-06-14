@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_08_162718) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_14_053038) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -30,6 +30,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_08_162718) do
     t.string "color"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "goals", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.float "target_amount"
+    t.float "current_amount", default: 0.0
+    t.bigint "user_id", null: false
+    t.datetime "target_date"
+    t.string "status", default: "pending"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_goals_on_user_id"
   end
 
   create_table "transactions", force: :cascade do |t|
@@ -80,6 +93,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_08_162718) do
   end
 
   add_foreign_key "credit_cards", "users"
+  add_foreign_key "goals", "users"
   add_foreign_key "transactions", "credit_cards"
   add_foreign_key "transactions", "users"
   add_foreign_key "user_details", "users"

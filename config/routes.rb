@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
     resources :credit_cards
     resources :transactions
+    resources :goals
 
     resources :dashboard, only: [] do
       collection do
