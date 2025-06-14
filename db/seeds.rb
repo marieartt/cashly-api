@@ -11,17 +11,18 @@ ActiveRecord::Base.transaction do
   # 1. Usuário demo
   # --------------------------------------------------------------------------
   user = User.create!(
-    name:                  "Gabriel Bento",
+    name:                  "Maria Anita",
     email:                 "demo@cashly.app",
     password:              "12345678",
     password_confirmation: "12345678",
     confirmed_at:          Time.current
   )
+  detail = user.user_detail
   UserDetail.create!(
     user:      user,
     phone:     "(11) 98765-4321",
     birthdate: Date.new(1995, 8, 14)
-  )
+  ) if detail.nil?
   puts "✅ Usuário criado: #{user.email} / 12345678"
 
   # --------------------------------------------------------------------------

@@ -21,6 +21,6 @@ class User < ActiveRecord::Base
   private
   
   def create_user_details
-    UserDetail.create(user: self, phone: phone, birthdate: birthdate)
+    UserDetail.create(user: self, phone: phone, birthdate: birthdate) if user_detail.nil? 
   end
 end
