@@ -10,9 +10,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_27_005039) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_08_162718) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "credit_cards", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "number"
+    t.date "expiration_date"
+    t.string "name"
+    t.string "brand"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_credit_cards_on_user_id"
+  end
+
+  create_table "expense_categories", force: :cascade do |t|
+    t.string "name"
+    t.string "color"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "transactions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "credit_card_id", null: false
+    t.string "description"
+    t.decimal "amount"
+    t.datetime "transaction_date"
+    t.string "category"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["credit_card_id"], name: "index_transactions_on_credit_card_id"
+    t.index ["user_id"], name: "index_transactions_on_user_id"
+  end
 
   create_table "user_details", force: :cascade do |t|
     t.string "phone"
@@ -48,5 +79,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_27_005039) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "credit_cards", "users"
+  add_foreign_key "transactions", "credit_cards"
+  add_foreign_key "transactions", "users"
   add_foreign_key "user_details", "users"
 end

@@ -6,6 +6,8 @@ class User < ActiveRecord::Base
   include DeviseTokenAuth::Concerns::User
 
   has_one :user_detail, dependent: :destroy
+  has_many :credit_cards
+  has_many :transactions
 
   validates :password, :password_confirmation, presence: true, on: :create
 

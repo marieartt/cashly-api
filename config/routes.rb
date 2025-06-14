@@ -4,9 +4,20 @@ Rails.application.routes.draw do
 
   get "up" => "rails/health#show", as: :rails_health_check
   
-  resources :users do
-    collection do
-      get :me, to: "users#me"
+  namespace :api do
+    resources :users do
+      collection do
+        get :me, to: "users#me"
+      end
+    end
+
+    resources :credit_cards
+    resources :transactions
+
+    resources :dashboard, only: [] do
+      collection do
+        get :summary
+      end
     end
   end
 end

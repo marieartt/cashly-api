@@ -1,6 +1,6 @@
-class UsersController < ApplicationController
+class Api::UsersController < ApplicationController
   before_action :set_user, only: [:show, :update, :destroy]
-  before_action :authenticate_request!
+  before_action :authenticate_request!, except: [:create, :index]
 
   # GET /users
   def index
@@ -27,7 +27,7 @@ class UsersController < ApplicationController
   # PUT/PATCH /users/:id
   def update
     if @user.update(user_params)
-      render json: @user
+      render json: @user, serializer: UserSerializer
     else
       render json: ErrorSerializer.serialize(@user.errors), status: :unprocessable_entity
     end

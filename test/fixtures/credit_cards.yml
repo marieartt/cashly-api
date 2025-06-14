@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  number: MyString
+  expiration_date: 2025-06-08
+  name: MyString
+  brand: MyString
+
+two:
+  user: two
+  number: MyString
+  expiration_date: 2025-06-08
+  name: MyString
+  brand: MyString
